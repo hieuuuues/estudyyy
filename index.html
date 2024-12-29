@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ai đẹp trai hơn T</title>
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        line-height: 1.6;
+        padding: 20px;
+        color: #2d3436;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .header {
+        background: white;
+        padding: 24px;
+        border-radius: 15px;
+        margin-bottom: 32px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      .header h1 {
+        color: #2d3436;
+        margin-bottom: 16px;
+        font-size: 28px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+      }
+
+      .user-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 16px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        font-size: 15px;
+      }
+
+      .user-info strong {
+        color: #2d3436;
+        font-weight: 600;
+      }
+
+      .exercises {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 24px;
+        margin-bottom: 32px;
+      }
+
+      .exercise-card {
+        background: white;
+        padding: 24px;
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .exercise-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .exercise-card h3 {
+        color: #2d3436;
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+
+      .exercise-card p {
+        color: #636e72;
+        margin-bottom: 20px;
+        font-size: 15px;
+      }
+
+      .button {
+        display: inline-block;
+        padding: 12px 24px;
+        background-color: #4834d4;
+        color: white;
+        text-decoration: none;
+        border-radius: 25px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        font-size: 15px;
+        box-shadow: 0 4px 6px rgba(72, 52, 212, 0.2);
+      }
+
+      .button:hover {
+        background-color: #3c2ab2;
+        transform: translateY(-2px);
+      }
+
+      .status {
+        margin-top: 16px;
+        font-size: 14px;
+        color: #636e72;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+      }
+
+      .status::before {
+        content: "";
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+      }
+
+      .status.completed::before {
+        background-color: #6ce65c;
+      }
+
+      .status.in-progress::before {
+        background-color: #ffd43b;
+      }
+
+      .floating-summary-btn {
+        position: fixed;
+        bottom: 32px;
+        right: 32px;
+        width: 56px;
+        height: 56px;
+        border-radius: 28px;
+        background-color: #4834d4;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(72, 52, 212, 0.2);
+        transition: all 0.3s ease;
+        border: none;
+      }
+
+      .floating-summary-btn:hover {
+        background-color: #3c2ab2;
+        transform: scale(1.05);
+      }
+
+      .floating-summary-btn i {
+        font-size: 24px;
+      }
+
+      .tooltip {
+        position: fixed;
+        bottom: 100px;
+        right: 32px;
+        background-color: white;
+        padding: 16px 20px;
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        max-width: 320px;
+        font-size: 14px;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        display: none;
+        z-index: 1000;
+        animation: fadeIn 0.3s ease-out;
+        color: #2d3436;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .container {
+          padding: 0 16px;
+        }
+
+        .header {
+          padding: 20px;
+          margin-bottom: 24px;
+        }
+
+        .exercises {
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+
+        .exercise-card {
+          padding: 20px;
+        }
+
+        .floating-summary-btn {
+          width: 48px;
+          height: 48px;
+          bottom: 24px;
+          right: 24px;
+        }
+
+        .tooltip {
+          bottom: 84px;
+          right: 24px;
+          max-width: calc(100% - 48px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>AI đẹp trai hơn HiếU</h1>
+        <div class="user-info">
+          <span>Xin chào, <strong>Hiếu </strong></span>
+          <span id="currentTime"></span>
+        </div>
+      </div>
+
+      <div class="exercises">
+        <!-- Bài tập 1 -->
+        <div class="exercise-card">
+          <h3>khen</h3>
+          <p>tập khen</p>
+          <a href="exercise1.html" class="button">Làm bài</a>
+          <div class="status" id="status1">Chưa làm</div>
+        </div>
+
+        <!-- Bài tập 2 -->
+        <div class="exercise-card">
+          <h3>tập khen</h3>
+          <p>học đê</p>
+          <a href="exercise2.html" class="button">Làm bài</a>
+          <div class="status" id="status2">Chưa làm</div>
+        </div>
+
+        <!-- Bài tập 3 -->
+        <div class="exercise-card">
+          <h3>tìm người đẹp trai</h3>
+          <p>tìm đi</p>
+          <a href="exercise3.html" class="button">Làm bài</a>
+          <div class="status" id="status3">Chưa làm</div>
+        </div>
+
+        <!-- Bài tập 4 -->
+        <div class="exercise-card">
+          <h3>khen</h3>
+          <p>tập khen</p>
+          <a href="exercise4.html" class="button">Làm bài</a>
+          <div class="status" id="status4">Chưa làm</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="floating-summary-btn" id="summaryBtn">
+      <i class="material-icons">show_chart</i>
+    </button>
+    <div class="tooltip" id="summaryTooltip">
+      Thuật toán đang theo dõi quá trình học tập của bạn, hãy tiếp tục học nhé!
+    </div>
+
+    <script>
+      function updateTime() {
+        const now = new Date();
+        document.getElementById("currentTime").textContent =
+          now.toLocaleString("vi-VN");
+        return now;
+      }
+
+      function checkCompletedExercises() {
+        const exerciseData =
+          JSON.parse(localStorage.getItem("exerciseData")) || {};
+        let completedCount = 0;
+
+        for (let i = 1; i <= 4; i++) {
+          if (exerciseData.exercises?.[i]?.completed) {
+            completedCount++;
+          }
+        }
+
+        if (completedCount === 4) {
+          window.location.href = "summary.html";
+        }
+
+        return completedCount;
+      }
+
+      function checkSummaryTime() {
+        const now = new Date();
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        return hours === 19 && minutes >= 48;
+      }
+
+      document
+        .getElementById("summaryBtn")
+        .addEventListener("click", function () {
+          const tooltip = document.getElementById("summaryTooltip");
+          const completedCount = checkCompletedExercises();
+
+          if (completedCount === 4) {
+            window.location.href = "summary.html";
+          } else if (checkSummaryTime()) {
+            window.location.href = "summary.html";
+          } else {
+            tooltip.textContent = `Bạn đã hoàn thành ${completedCount}/4 bài tập. Hãy hoàn thành tất cả các bài tập, thuật toán đang theo dõi quá trình học tập của bạn!`;
+            tooltip.style.display = "block";
+
+            setTimeout(() => {
+              tooltip.style.display = "none";
+            }, 10000);
+          }
+        });
+
+      function checkExerciseStatus() {
+        const exerciseData =
+          JSON.parse(localStorage.getItem("exerciseData")) || {};
+        let completedCount = 0;
+
+        for (let i = 1; i <= 4; i++) {
+          const status = document.getElementById(`status${i}`);
+          const exercise = exerciseData.exercises?.[i];
+
+          if (exercise?.completed) {
+            status.textContent = "Đã hoàn thành";
+            status.classList.add("completed");
+            completedCount++;
+          } else if (exercise?.startTime) {
+            status.textContent = "Đang làm";
+            status.classList.add("in-progress");
+          }
+        }
+
+        if (completedCount === 4) {
+          document.getElementById("summaryTooltip").textContent =
+            "Bạn đã hoàn thành tất cả bài tập! Bấm vào đây để xem kết quả chi tiết.";
+        }
+      }
+
+      updateTime();
+      setInterval(updateTime, 1000);
+      checkExerciseStatus();
+
+      setInterval(() => {
+        checkExerciseStatus();
+      }, 5000);
+    </script>
+  </body>
+</html>

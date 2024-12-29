@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CHim</title>
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Reset và Base styles */
+      /* Base styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+        padding: 20px;
+        line-height: 1.6;
+        overflow: hidden;
+        color: #2d3436;
+      }
+
+      /* Header Styles */
+      .page-header {
+        max-width: 1400px;
+        margin: 0 auto;
+        background: white;
+        padding: 20px 30px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(100% - 40px);
+        z-index: 1000;
+      }
+
+      .header-left {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .header-left h1 {
+        font-size: 1.5rem;
+        color: #2d3436;
+        font-weight: 600;
+      }
+
+      .header-right {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+
+      /* Button Styles */
+      .back-btn {
+        background: transparent;
+        color: #4834d4;
+        border: 2px solid #4834d4;
+        padding: 8px 20px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .back-btn:hover {
+        background: #4834d4;
+        color: white;
+        transform: translateX(-5px);
+      }
+
+      .back-btn i {
+        font-size: 20px;
+      }
+
+      .btn {
+        padding: 12px 30px;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .submit-btn {
+        background: #4834d4;
+        color: white;
+        box-shadow: 0 4px 6px rgba(72, 52, 212, 0.2);
+      }
+
+      .submit-btn:hover {
+        background: #3c2ab2;
+        transform: translateY(-2px);
+      }
+
+      /* Timer */
+      .timer {
+        background: #4834d4;
+        color: white;
+        padding: 10px 25px;
+        border-radius: 25px;
+        font-weight: 500;
+        box-shadow: 0 4px 6px rgba(72, 52, 212, 0.2);
+        font-size: 1.2em;
+      }
+
+      /* Main Container */
+      .exercise-container {
+        max-width: 1400px;
+        margin: 100px auto 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        height: calc(100vh - 140px);
+        position: relative;
+      }
+
+      /* Reading Section */
+      .reading-section {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        height: 100%;
+        overflow: hidden;
+      }
+
+      .reading-content {
+        height: 100%;
+        overflow-y: auto;
+        padding-right: 20px;
+      }
+
+      .reading-content h2 {
+        color: #2d3436;
+        margin-bottom: 20px;
+        font-size: 24px;
+      }
+
+      .reading-content p {
+        margin-bottom: 15px;
+        line-height: 1.8;
+        color: #2d3436;
+      }
+
+      /* Questions Section */
+      #questions {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        height: 100%;
+        overflow-y: auto;
+      }
+
+      /* Question Items */
+      .question {
+        background: white;
+        margin-bottom: 30px;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .question:hover {
+        transform: translateY(-5px);
+      }
+
+      .question h3 {
+        color: #2d3436;
+        margin-bottom: 20px;
+        font-size: 18px;
+        font-weight: 600;
+      }
+
+      /* Options Styling */
+      .options {
+        display: grid;
+        gap: 15px;
+      }
+
+      .option {
+        position: relative;
+        padding: 15px 20px 15px 50px;
+        background: #f8f9fa;
+        border: 2px solid #e9ecef;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .option:hover {
+        background: #e3e6f0;
+        border-color: #4834d4;
+      }
+
+      /* Custom Radio Buttons */
+      .option input[type="radio"] {
+        position: absolute;
+        opacity: 0;
+      }
+
+      .option span {
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+        background: white;
+        border: 2px solid #4834d4;
+        border-radius: 50%;
+        transition: all 0.2s ease;
+      }
+
+      .option input[type="radio"]:checked + span {
+        background: #4834d4;
+      }
+
+      .option input[type="radio"]:checked + span:after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 8px;
+        height: 8px;
+        background: white;
+        border-radius: 50%;
+      }
+
+      /* Modal Styles */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        animation: fadeIn 0.3s ease;
+      }
+
+      .modal-content {
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        max-width: 500px;
+        width: 90%;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .modal-content h3 {
+        color: #2d3436;
+        margin-bottom: 15px;
+        font-size: 20px;
+      }
+
+      /* Results Styling */
+      .result-summary {
+        margin: 20px 0;
+        padding: 20px;
+        border-radius: 10px;
+        background: #f8f9fa;
+      }
+
+      .result-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-bottom: 1px solid #e9ecef;
+      }
+
+      .result-item:last-child {
+        border-bottom: none;
+      }
+
+      .highlight {
+        font-weight: 600;
+        color: #4834d4;
+      }
+
+      /* Answer States */
+      .option.correct {
+        background-color: #d4edda !important;
+        border-color: #28a745 !important;
+        color: #155724;
+      }
+
+      .option.incorrect {
+        background-color: #f8d7da !important;
+        border-color: #dc3545 !important;
+        color: #721c24;
+      }
+
+      .feedback {
+        margin-top: 15px;
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+        font-weight: 500;
+      }
+
+      /* Scrollbar Styling */
+      .reading-content::-webkit-scrollbar,
+      #questions::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .reading-content::-webkit-scrollbar-track,
+      #questions::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 3px;
+      }
+
+      .reading-content::-webkit-scrollbar-thumb,
+      #questions::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 3px;
+      }
+
+      .reading-content::-webkit-scrollbar-thumb:hover,
+      #questions::-webkit-scrollbar-thumb:hover {
+        background: #555;
+      }
+
+      /* Animations */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1024px) {
+        .exercise-container {
+          grid-template-columns: 1fr;
+          height: calc(100vh - 180px);
+        }
+
+        .reading-section {
+          height: 40vh;
+        }
+
+        #questions {
+          height: calc(60vh - 20px);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .page-header {
+          padding: 15px;
+        }
+
+        .header-left {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .header-right {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .exercise-container {
+          margin-top: 140px;
+        }
+
+        .question h3 {
+          font-size: 16px;
+        }
+
+        .option {
+          padding: 12px 15px 12px 40px;
+        }
+
+        .back-btn {
+          font-size: 14px;
+          padding: 6px 15px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        body {
+          padding: 10px;
+        }
+
+        .page-header {
+          width: calc(100% - 20px);
+        }
+
+        .modal-content {
+          padding: 20px;
+        }
+
+        .reading-section,
+        #questions {
+          padding: 20px;
+        }
+
+        .timer {
+          font-size: 1em;
+          padding: 8px 15px;
+        }
+      }
+
+      /* Print styles */
+      @media print {
+        .page-header,
+        .back-btn,
+        .submit-btn {
+          display: none;
+        }
+
+        body {
+          background: white;
+          padding: 0;
+        }
+
+        .exercise-container {
+          margin: 0;
+          display: block;
+        }
+
+        .reading-section,
+        #questions {
+          box-shadow: none;
+          padding: 0;
+          margin: 20px 0;
+        }
+      }
+      /* Styles cho highlight toolbar */
+      .highlight-toolbar {
+        display: none;
+        position: absolute;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 5px;
+        z-index: 1000;
+        transform: translate(-50%, -100%);
+        margin-top: -10px;
+        animation: fadeIn 0.2s ease;
+      }
+
+      .highlight-toolbar::after {
+        content: "";
+        position: absolute;
+        bottom: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        border-top: 6px solid white;
+      }
+
+      .toolbar-btn {
+        background: none;
+        border: none;
+        padding: 5px;
+        margin: 0 2px;
+        border-radius: 4px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+      }
+
+      .toolbar-btn i {
+        font-size: 20px;
+      }
+
+      .toolbar-btn.highlight-btn {
+        color: #ffd43b;
+      }
+
+      .toolbar-btn.highlight-btn:hover {
+        background: #fff3bf;
+      }
+
+      .toolbar-btn.clear-btn {
+        color: #ff6b6b;
+      }
+
+      .toolbar-btn.clear-btn:hover {
+        background: #ffe3e3;
+      }
+
+      /* Style cho highlighted text */
+      .highlighted {
+        background-color: #ffd43b;
+        border-radius: 3px;
+        padding: 2px 0;
+        transition: background-color 0.3s ease;
+      }
+
+      /* Style cho text selection */
+      ::selection {
+        background: rgba(255, 212, 59, 0.4);
+      }
+    </style>
+  </head>
+  <body>
+    <header class="page-header">
+      <div class="header-left">
+        <button onclick="goBack()" class="back-btn">
+          <i class="material-icons">arrow_back</i> Quay lại
+        </button>
+      </div>
+      <div class="timer" id="timer">00:00</div>
+      <div class="button-container">
+        <button id="submitBtn" class="btn submit-btn">Nộp bài</button>
+      </div>
+    </header>
+    <div class="exercise-container">
+      <div class="reading-section">
+        <div class="reading-content">
+          <h2>Hiếu có đẹp trai ko ?</h2>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat ducimus vero exercitationem porro perspiciatis facilis numquam dolor dolores! Reiciendis non quia modi soluta, vitae consequatur earum sunt praesentium a ab.
+            Deleniti vel dolorem labore perspiciatis repudiandae in, vitae fuga numquam, voluptate est aspernatur reprehenderit, quas aliquam sunt. Harum illo, quo, odio iusto alias adipisci aperiam accusamus a totam sit dignissimos!
+            Ab, doloribus exercitationem aperiam architecto consequatur a saepe voluptate, distinctio facere odio pariatur similique dolore eum blanditiis iure perspiciatis temporibus voluptas alias magni? A culpa exercitationem harum voluptates impedit. Molestias.
+            Inventore delectus earum id omnis enim reprehenderit reiciendis ad unde, distinctio impedit iure, illo laborum qui quaerat nulla eum quibusdam cumque! Laborum fuga quaerat consequuntur commodi? Deleniti praesentium magnam a.
+            Odit, consequuntur vitae eos perspiciatis similique pariatur neque iusto, labore culpa aliquid iste exercitationem? Alias enim libero quaerat, sit possimus ad ex labore fugiat nostrum incidunt, sunt, tempora ut odio?
+            Natus voluptatem ipsum dolorum quasi voluptatibus aliquid neque obcaecati reiciendis, odit illum pariatur accusamus distinctio dolores! Eos quos earum quas nemo, repellendus voluptatum? Quidem rem quod facere perspiciatis, ab earum!
+            Ratione rerum perferendis vitae voluptatem, accusantium, mollitia repellendus cum officiis ab porro id nobis excepturi deleniti non a tenetur illo soluta quos facilis officia autem. Inventore sed suscipit quia nulla.
+            Dolorum vel dignissimos officiis reprehenderit unde libero cum exercitationem architecto non tempora maiores, numquam earum labore at repudiandae. Atque at quaerat quam sint! Nulla earum pariatur necessitatibus? Accusantium, omnis cum.
+            Voluptatibus animi pariatur similique debitis, sequi exercitationem? Animi quam dolorem iure quos tempore ipsa cum ab doloribus, molestiae distinctio ullam! Doloribus illum adipisci soluta voluptatibus et, repellendus nam dicta neque.
+            Velit atque ipsa cumque ipsam asperiores, rerum fuga officiis deleniti voluptatem nisi molestias ex id eveniet vitae eos similique amet dolore! Error velit repudiandae ipsa accusamus? Odit, libero. Eum, vel.
+            Beatae voluptate repellendus explicabo, aspernatur quia nesciunt cupiditate ullam sunt molestiae dignissimos in dolorum! Illum iure qui nesciunt dicta odio consequatur obcaecati praesentium, modi similique. Vero aperiam deleniti nisi illum.
+            Quia cum doloremque aliquid non, aperiam explicabo aliquam reiciendis molestiae. Eligendi, excepturi iure repudiandae eius rerum in officia a, iste totam ipsa veniam nostrum vel alias nam facilis voluptate autem.
+            Officia cupiditate ad reiciendis. Tempore consequatur adipisci, voluptas, atque commodi alias eum earum est non ad hic aliquam rem quae molestias delectus aut? Obcaecati repellendus dolores fugiat soluta dicta provident?
+            Omnis voluptatum non hic aliquid corporis accusantium vitae quaerat in explicabo, nesciunt dolorum qui officia, deserunt placeat libero! Culpa commodi exercitationem laboriosam fuga eius eaque id incidunt necessitatibus magnam ullam!
+            Beatae dolor error facilis ipsa! Ducimus ipsum alias tenetur id quos saepe rerum pariatur, vero eaque nam earum atque ab reprehenderit voluptates tempore illo explicabo. Facere tenetur id dolore sit!
+            Similique suscipit nisi voluptas provident aliquam nesciunt necessitatibus aliquid architecto quaerat! Numquam, tempora blanditiis. Corrupti dolores nam quae exercitationem cum quos, natus voluptatibus doloribus consequatur enim doloremque. Enim, nesciunt veniam.
+            In nemo eos magni, laboriosam illo quidem iusto culpa ipsa esse id quaerat quasi labore reprehenderit! Aperiam, sint magni enim ratione accusamus nostrum veritatis mollitia? Atque est consequuntur natus quibusdam.
+            Nulla odio ab, consequatur similique illo quia sit aut laboriosam reprehenderit, alias impedit accusamus laborum ad fugit repellendus, earum distinctio velit repellat? Eaque, voluptatum? Veritatis ullam cum error excepturi eveniet!
+            Magni a quis deleniti necessitatibus expedita nulla, pariatur veritatis eaque quas ab. Molestias laudantium tenetur voluptates alias fugiat iure, libero facere, similique corporis est quia explicabo in perferendis illum iste!
+            Officia aspernatur mollitia, maxime repellendus quas corrupti expedita voluptatum perferendis deleniti velit, veritatis ipsam quaerat cum a vitae quos quae iste vel ducimus sunt? At nobis sed nesciunt vel cumque. o tempore nobis incidunt dolorum. Perspiciatis impedit
+            ab nostrum hic facilis? Porro reprehenderit sapiente non numquam,
+            laboriosam sed cupiditate earum aliquam deserunt est illo iusto
+            libero soluta natus provident perspiciatis reiciendis sunt nulla
+            recusandae, deleniti rerum blanditiis fuga. Atque, quo natus?
+            Quaerat, quibusdam. Reiciendis nobis dolor obcaecati, cupiditate,
+            tempora ex at modi dignissimos ullam quos provident vitae nemo.
+            Natus deleniti, odit est, nobis, dolor delectus laudantium cum
+            voluptatum laboriosam fugit eos. Nobis alias adipisci iste odio
+            quisquam. Rerum hic dignissimos consectetur veritatis ipsum
+            accusamus pariatur architecto voluptas cupiditate saepe eum aliquid
+            ut cumque totam labore tempore et tenetur, iusto fugit sit! Officia
+            repudiandae eos accusamus alias adipisci quas tenetur et dolores aut
+            eveniet culpa modi doloribus voluptatibus sunt facilis doloremque
+            placeat reiciendis illum libero magni, consectetur ullam distinctio
+            molestiae. Distinctio, minima. Qui perspiciatis at excepturi
+            blanditiis. Nobis consectetur, doloribus dicta aperiam illo facilis
+            optio recusandae corporis harum culpa fugit iure itaque cumque magni
+            a, iusto officia vitae quam saepe at ratione? Incidunt, tenetur
+            exercitationem deserunt iusto doloribus nemo officiis rem minima,
+            omnis cum consequatur quos quae ullam laborum earum quia magni
+            accusantium pariatur laudantium laboriosam. Reiciendis ducimus optio
+            nobis quibusdam libero? Provident reiciendis esse officia optio
+            laboriosam, eveniet, dolorem sint minus voluptates maiores
+            necessitatibus ea adipisci cupiditate velit ab cum in dolorum
+            eligendi? Omnis cum voluptatibus officiis quos aliquid fugit iste.
+            Ducimus consequatur, atque doloremque pariatur quia quas similique
+            accusamus aut assumenda iusto voluptatem ipsam, dolore, dolores
+            laborum fugiat autem nesciunt? Ullam dolores quia necessitatibus,
+            perferendis recusandae temporibus! Qui, ut ipsam. Optio quo
+            reprehenderit exercitationem, id culpa eos a possimus accusantium ad
+            dicta unde enim doloremque? Saepe cum quia animi repudiandae ea
+            ipsa? Explicabo recusandae quo libero tenetur totam nobis
+            voluptates? Ea fuga iure eum ut perferendis! Provident, obcaecati
+            quisquam? Voluptatum porro voluptate a hic, quia eius quaerat omnis
+            harum possimus molestias sapiente eos quidem, minima sit qui dolor.
+            Autem, et. Et itaque incidunt quia doloremque hic debitis veritatis
+            dignissimos sequi ratione ea, voluptatem laboriosam repellendus,
+            perspiciatis error fugit quis obcaecati vero? Facilis laudantium, ut
+            adipisci sed incidunt magnam sit optio? Alias illo corporis,
+            voluptates fuga similique ab odio dolorum nulla excepturi ratione
+            quae consequatur aspernatur obcaecati culpa accusamus quaerat
+            sapiente sit magnam est quod numquam, reiciendis sequi? Laboriosam,
+            dolor unde. Magnam similique, eos omnis nulla non illum quidem
+            dolores, corrupti cumque optio nemo consequuntur officiis vitae
+            perferendis. Doloribus aliquam numquam voluptatum, et sapiente atque
+            minus ad voluptatem cum fugiat neque? Error reiciendis quia harum,
+            provident facere vero, dolore enim sequi nostrum perferendis aliquam
+            aperiam itaque pariatur doloribus non cumque nam dolor iure omnis
+            autem suscipit natus odit totam quod? Maiores. Tempora accusamus
+            illum deleniti ipsum veritatis quasi illo earum tenetur modi
+            accusantium mollitia quas adipisci inventore, repudiandae libero.
+            Perspiciatis amet atque expedita doloremque laborum a labore
+            praesentium fuga ab dolor! Esse est minima assumenda delectus
+            corrupti vitae magnam atque vero consequatur numquam quod, ducimus
+            ipsum vel nesciunt qui asperiores at aut doloremque dolorum.
+            Reprehenderit optio, nemo delectus totam assumenda beatae! Saepe
+            enim id expedita nesciunt quos labore quasi dolorem, esse, iure
+            incidunt, porro voluptates! At esse magnam totam ullam deleniti
+            nostrum sequi, sint dolorem rem, autem animi harum quia aperiam.
+            Esse, pariatur. Culpa voluptate nesciunt, aut perspiciatis eius eos
+            accusantium minima magni dolorum non, nobis, error laborum. Eius,
+            alias harum, illum dolore, eligendi quas corrupti necessitatibus
+            dolor quos earum quod! Vel, omnis deserunt nihil officiis commodi at
+            similique optio rerum ipsa non repellendus totam aperiam minima
+            voluptates eos voluptatum, laboriosam maxime nisi qui. Quidem, porro
+            deleniti. Nulla officia itaque quas. Repudiandae cupiditate hic
+            ducimus nisi ad unde rem deleniti eligendi maxime explicabo,
+            incidunt quae voluptatibus tempore dolorum, quam quisquam omnis, in
+            necessitatibus facilis reprehenderit provident. Unde odio quam neque
+            sint! Nobis eos, perspiciatis ratione distinctio voluptatem aliquid
+            cum reiciendis explicabo eius, mollitia quo quos incidunt aspernatur
+            facere voluptatibus odio dignissimos minus necessitatibus! Officiis
+            exercitationem dolorum maiores iusto eos. Veritatis, ab? Quam quia
+            pariatur veniam rerum hic quaerat id quidem optio maiores, omnis
+            libero voluptas voluptate tempora laboriosam, temporibus repellendus
+            minus repudiandae mollitia? Inventore, tempora? Neque porro quam
+            exercitationem animi in. Voluptatem possimus consequatur provident
+            eligendi vero non alias, blanditiis beatae modi ratione distinctio
+            fugiat iure maiores accusantium ducimus aliquid aliquam minus porro
+            voluptatibus saepe similique obcaecati cupiditate tempore.
+            Temporibus, ipsa? Laboriosam nostrum aliquam blanditiis dolore
+            beatae autem rem sapiente harum atque esse. Inventore laborum quis
+            numquam deleniti ea. Asperiores voluptatibus consequuntur corporis
+            id? Dolores commodi odio, impedit hic molestias quis. Atque pariatur
+            dolorum in cumque nam nesciunt maiores commodi! Aut iure, voluptatem
+            reiciendis quidem consectetur laboriosam nulla quis tempore unde.
+            Eaque quia, earum pariatur officiis rem distinctio quod consectetur
+            dolor?
+          </p>
+        </div>
+      </div>
+      <div id="questions">
+        <div class="question" id="q1">
+          <h3>Câu 1: hiếu có đẹp trai ko </h3>
+          <div class="options">
+            <label class="option">
+              <input type="radio" name="q1" value="a" />
+              <span></span>
+              A) ko
+            </label>
+            <label class="option">
+              <input type="radio" name="q1" value="b" />
+              <span></span>
+              B) ko
+            </label>
+            <label class="option">
+              <input type="radio" name="q1" value="c" />
+              <span></span>
+              C)ko
+            </label>
+            <label class="option">
+              <input type="radio" name="q1" value="d" data-correct="true" />
+              <span></span>
+              D) có
+            </label>
+          </div>
+          <div class="result"></div>
+        </div>
+
+        <div class="question" id="q2">
+          <h3>Câu 2:Hiếu có đẹp trai ko </h3>
+          <div class="options">
+            <label class="option">
+              <input type="radio" name="q2" value="a" data-correct="true" />
+              <span></span>
+              A) có
+            </label>
+            <label class="option">
+              <input type="radio" name="q2" value="b" />
+              <span></span>
+              B) ko
+            </label>
+            <label class="option">
+              <input type="radio" name="q2" value="c" />
+              <span></span>
+              C) ko 
+            </label>
+            <label class="option">
+              <input type="radio" name="q2" value="d" />
+              <span></span>
+              D) ko
+            </label>
+          </div>
+          <div class="result"></div>
+        </div>
+
+        <div class="question" id="q3">
+          <h3>Câu 3: hiếu có đẹp trai ko </h3>
+          <div class="options">
+            <label class="option">
+              <input type="radio" name="q3" value="a" />
+              <span></span>
+              A) ko
+            </label>
+            <label class="option">
+              <input type="radio" name="q3" value="b" data-correct="true" />
+              <span></span>
+              B) có
+            </label>
+            <label class="option">
+              <input type="radio" name="q3" value="c" />
+              <span></span>
+              C) ko
+            </label>
+            <label class="option">
+              <input type="radio" name="q3" value="d" />
+              <span></span>
+              D) ko
+            </label>
+          </div>
+          <div class="result"></div>
+        </div>
+
+        <div class="question" id="q4">
+          <h3>Câu 4: hiếu có đẹp trai ko </h3>
+          <div class="options">
+            <label class="option">
+              <input type="radio" name="q4" value="a" />
+              <span></span>
+              A) ko
+            </label>
+            <label class="option">
+              <input type="radio" name="q4" value="b" />
+              <span></span>
+              B) ko
+            </label>
+            <label class="option">
+              <input type="radio" name="q4" value="c" data-correct="true" />
+              <span></span>
+              C) có
+            </label>
+            <label class="option">
+              <input type="radio" name="q4" value="d" />
+              <span></span>
+              D) ko
+            </label>
+          </div>
+          <div class="result"></div>
+        </div>
+
+        <div class="question" id="q5">
+          <h3>Câu 5:Hiếu có đẹp trai ko</h3>
+          <div class="options">
+            <label class="option">
+              <input type="radio" name="q5" value="a" />
+              <span></span>
+              A) ko
+            </label>
+            <label class="option">
+              <input type="radio" name="q5" value="b" />
+              <span></span>
+              B) ko
+            </label>
+            <label class="option">
+              <input type="radio" name="q5" value="c" data-correct="true" />
+              <span></span>
+              C) có
+            </label>
+            <label class="option">
+              <input type="radio" name="q5" value="d" />
+              <span></span>
+              D) ko
+            </label>
+          </div>
+          <div class="result"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal xác nhận -->
+    <div id="confirmModal" class="modal">
+      <div class="modal-content">
+        <h3>Xác nhận nộp bài</h3>
+        <p>Bạn có chắc chắn muốn nộp bài?</p>
+        <div class="button-container">
+          <button onclick="confirmSubmit()" class="btn submit-btn">
+            Nộp bài
+          </button>
+          <button onclick="closeModal()" class="btn">Làm tiếp</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal kết quả -->
+    <div id="resultModal" class="modal">
+      <div class="modal-content">
+        <h3>Kết quả bài làm</h3>
+        <div class="result-summary">
+          <div class="result-item">
+            <span>Số câu đúng:</span>
+            <span id="correctCount" class="highlight">0</span>
+          </div>
+          <div class="result-item">
+            <span>Số câu sai:</span>
+            <span id="wrongCount" class="highlight">0</span>
+          </div>
+          <div class="result-item">
+            <span>Điểm số:</span>
+            <span id="scoreCount" class="highlight">0</span>
+          </div>
+          <div class="result-item">
+            <span>Thời gian làm bài:</span>
+            <span id="totalTime" class="highlight">00:00</span>
+          </div>
+        </div>
+        <div id="resultFeedback" class="feedback"></div>
+        <div class="button-container">
+          <button onclick="reviewAnswers()" class="btn submit-btn">
+            Xem đáp án
+          </button>
+          <button onclick="goHome()" class="btn">Về trang chủ</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Original modals and script remain the same -->
+    <script>
+      // Hàm bắt đầu bài tập và đếm giờ
+
+      // Cập nhật thời gian
+
+      // Hàm xử lý highlight text
+      class TextHighlighter {
+        constructor() {
+          this.toolbar = document.getElementById("highlight-toolbar");
+          this.init();
+          this.setupEventListeners();
+        }
+
+        init() {
+          // Thêm toolbar vào DOM nếu chưa có
+          if (!this.toolbar) {
+            this.createToolbar();
+          }
+        }
+
+        createToolbar() {
+          const toolbar = document.createElement("div");
+          toolbar.id = "highlight-toolbar";
+          toolbar.className = "highlight-toolbar";
+          toolbar.innerHTML = `
+              <button class="toolbar-btn highlight-btn" title="Highlight">
+                  <i class="material-icons">brush</i>
+              </button>
+              <button class="toolbar-btn clear-btn" title="Clear">
+                  <i class="material-icons">format_clear</i>
+              </button>
+          `;
+          document.body.appendChild(toolbar);
+          this.toolbar = toolbar;
+        }
+
+        setupEventListeners() {
+          // Sự kiện khi bôi đen text
+          document
+            .querySelector(".reading-content")
+            .addEventListener("mouseup", (e) => {
+              const selection = window.getSelection();
+              if (!selection.isCollapsed) {
+                this.showToolbar(selection);
+              }
+            });
+
+          // Sự kiện click ngoài toolbar
+          document.addEventListener("mousedown", (e) => {
+            if (!this.toolbar.contains(e.target)) {
+              this.hideToolbar();
+            }
+          });
+
+          // Sự kiện highlight
+          this.toolbar
+            .querySelector(".highlight-btn")
+            .addEventListener("click", () => {
+              this.highlightSelection();
+            });
+
+          // Sự kiện clear highlight
+          this.toolbar
+            .querySelector(".clear-btn")
+            .addEventListener("click", () => {
+              this.clearHighlight();
+            });
+        }
+
+        showToolbar(selection) {
+          const range = selection.getRangeAt(0);
+          const rect = range.getBoundingClientRect();
+
+          // Hiển thị toolbar
+          this.toolbar.style.display = "flex";
+
+          // Tính toán vị trí
+          const scrollTop =
+            window.pageYOffset || document.documentElement.scrollTop;
+          const toolbarHeight = this.toolbar.offsetHeight;
+
+          let top = rect.top + scrollTop - toolbarHeight - 10;
+          let left = rect.left + rect.width / 2;
+
+          // Điều chỉnh vị trí nếu toolbar vượt ra ngoài màn hình
+          if (top < scrollTop) {
+            top = rect.bottom + scrollTop + 10;
+          }
+          if (left < 0) {
+            left = 10;
+          } else if (left + this.toolbar.offsetWidth > window.innerWidth) {
+            left = window.innerWidth - this.toolbar.offsetWidth - 10;
+          }
+
+          this.toolbar.style.top = `${top}px`;
+          this.toolbar.style.left = `${left}px`;
+        }
+
+        hideToolbar() {
+          this.toolbar.style.display = "none";
+        }
+
+        highlightSelection() {
+          const selection = window.getSelection();
+          if (!selection.isCollapsed) {
+            const range = selection.getRangeAt(0);
+            const span = document.createElement("span");
+            span.className = "highlighted";
+
+            try {
+              range.surroundContents(span);
+              this.saveHighlights();
+            } catch (e) {
+              console.error("Không thể highlight phần chồng lấp");
+            }
+
+            selection.removeAllRanges();
+            this.hideToolbar();
+          }
+        }
+
+        clearHighlight() {
+          const selection = window.getSelection();
+          if (!selection.isCollapsed) {
+            const range = selection.getRangeAt(0);
+            const highlights = document.querySelectorAll(".highlighted");
+
+            highlights.forEach((highlight) => {
+              if (range.intersectsNode(highlight)) {
+                const text = highlight.textContent;
+                highlight.parentNode.replaceChild(
+                  document.createTextNode(text),
+                  highlight
+                );
+              }
+            });
+
+            this.saveHighlights();
+            selection.removeAllRanges();
+            this.hideToolbar();
+          }
+        }
+
+        saveHighlights() {
+          const highlights = Array.from(
+            document.querySelectorAll(".highlighted")
+          ).map((el) => ({
+            text: el.textContent,
+            offset: this.getTextOffset(el),
+          }));
+
+          localStorage.setItem("highlights", JSON.stringify(highlights));
+        }
+
+        getTextOffset(element) {
+          const content = document.querySelector(".reading-content");
+          const walker = document.createTreeWalker(
+            content,
+            NodeFilter.SHOW_TEXT,
+            null,
+            false
+          );
+
+          let offset = 0;
+          while (walker.nextNode()) {
+            if (element.contains(walker.currentNode)) {
+              return offset;
+            }
+            offset += walker.currentNode.length;
+          }
+          return -1;
+        }
+
+        restoreHighlights() {
+          const saved = localStorage.getItem("highlights");
+          if (!saved) return;
+
+          JSON.parse(saved).forEach((highlight) => {
+            const content = document.querySelector(".reading-content");
+            const walker = document.createTreeWalker(
+              content,
+              NodeFilter.SHOW_TEXT,
+              null,
+              false
+            );
+
+            let charCount = 0;
+            while (walker.nextNode()) {
+              const node = walker.currentNode;
+              const nodeLength = node.length;
+
+              if (
+                charCount <= highlight.offset &&
+                highlight.offset < charCount + nodeLength
+              ) {
+                const range = document.createRange();
+                const start = highlight.offset - charCount;
+
+                range.setStart(node, start);
+                range.setEnd(node, start + highlight.text.length);
+
+                const span = document.createElement("span");
+                span.className = "highlighted";
+                range.surroundContents(span);
+                break;
+              }
+
+              charCount += nodeLength;
+            }
+          });
+        }
+      }
+
+      // Khởi tạo khi trang load
+      document.addEventListener("DOMContentLoaded", () => {
+        initializeExercise();
+        const highlighter = new TextHighlighter();
+        highlighter.restoreHighlights();
+      });
+    </script>
+    <script src="tracking.js"></script>
+    <script>
+      function goBack() {
+        // Kiểm tra nếu đã bắt đầu làm bài
+        const hasStarted = document.querySelector(
+          'input[type="radio"]:checked'
+        );
+
+        if (hasStarted && !isSubmitted) {
+          if (
+            confirm(
+              "Bạn có chắc muốn rời khỏi bài tập? Mọi tiến trình sẽ không được lưu."
+            )
+          ) {
+            window.location.href = "index.html";
+          }
+        } else {
+          window.location.href = "index.html";
+        }
+      }
+
+      const tracker = window.exerciseTracker;
+      let startTime = new Date();
+      let timerInterval;
+      let isSubmitted = false;
+
+      // Khởi tạo bài tập
+      function initializeExercise() {
+        tracker.startExercise("2");
+        updateTimer();
+        timerInterval = setInterval(updateTimer, 1000);
+        addOptionListeners();
+      }
+
+      // Cập nhật timer
+      function updateTimer() {
+        const now = new Date();
+        const timeSpent = Math.floor((now - startTime) / 1000);
+        const minutes = Math.floor(timeSpent / 60);
+        const seconds = timeSpent % 60;
+        document.getElementById("timer").textContent = `${minutes
+          .toString()
+          .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+      }
+
+      // Thêm listeners cho các options
+      function addOptionListeners() {
+        document.querySelectorAll(".option").forEach((option) => {
+          option.addEventListener("click", function () {
+            const questionDiv = this.closest(".question");
+            questionDiv
+              .querySelectorAll(".option")
+              .forEach((opt) => opt.classList.remove("selected"));
+            this.classList.add("selected");
+          });
+        });
+      }
+
+      // Hiển thị modal xác nhận
+      function showConfirmModal() {
+        document.getElementById("confirmModal").style.display = "flex";
+      }
+
+      // Đóng modal
+      function closeModal() {
+        document.getElementById("confirmModal").style.display = "none";
+        document.getElementById("resultModal").style.display = "none";
+      }
+
+      // Xác nhận nộp bài
+      function confirmSubmit() {
+        if (isSubmitted) return;
+        isSubmitted = true;
+
+        clearInterval(timerInterval);
+        closeModal();
+
+        let correct = 0;
+        let wrong = 0;
+        const mistakes = [];
+        const totalQuestions = 5; // Tổng số câu hỏi
+
+        document.querySelectorAll(".question").forEach((question, index) => {
+          const selectedAnswer = question.querySelector(
+            'input[type="radio"]:checked'
+          );
+          const correctAnswer = question.querySelector(
+            'input[data-correct="true"]'
+          );
+
+          if (selectedAnswer) {
+            if (selectedAnswer.dataset.correct) {
+              correct++;
+            } else {
+              wrong++;
+              mistakes.push({
+                questionIndex: index + 1,
+                selectedAnswer: selectedAnswer.value,
+                correctAnswer: correctAnswer.value,
+              });
+            }
+          } else {
+            wrong++;
+            mistakes.push({
+              questionIndex: index + 1,
+              selectedAnswer: null,
+              correctAnswer: correctAnswer.value,
+            });
+          }
+        });
+
+        // Tính điểm (thang điểm 10)
+        const score = (correct / totalQuestions) * 10;
+
+        // Cập nhật kết quả vào tracker
+        tracker.finishExercise("2", correct, wrong, mistakes);
+
+        // Hiển thị kết quả
+        showResults(correct, wrong, score);
+      }
+
+      // Hiển thị kết quả
+      function showResults(correct, wrong, score) {
+        document.getElementById("correctCount").textContent = correct;
+        document.getElementById("wrongCount").textContent = wrong;
+        document.getElementById("scoreCount").textContent = score.toFixed(1);
+        document.getElementById("totalTime").textContent =
+          document.getElementById("timer").textContent;
+
+        // Hiển thị feedback dựa trên điểm số
+        const feedback = document.getElementById("resultFeedback");
+        if (score >= 8) {
+          feedback.innerHTML =
+            "Xuất sắc! Bạn đã nắm vững kiến thức về phương trình bậc 2.";
+          feedback.style.color = "#28a745";
+        } else if (score >= 6) {
+          feedback.innerHTML =
+            "Khá tốt! Hãy xem lại những câu sai để cải thiện thêm.";
+          feedback.style.color = "#ffc107";
+        } else {
+          feedback.innerHTML = "Bạn cần ôn tập thêm về phương trình bậc 2.";
+          feedback.style.color = "#dc3545";
+        }
+
+        document.getElementById("resultModal").style.display = "flex";
+      }
+
+      // Xem lại đáp án
+      function reviewAnswers() {
+        closeModal();
+        document.querySelectorAll(".question").forEach((question) => {
+          const selectedAnswer = question.querySelector(
+            'input[type="radio"]:checked'
+          );
+          const correctAnswer = question.querySelector(
+            'input[data-correct="true"]'
+          );
+          const resultDiv = question.querySelector(".result");
+
+          // Reset classes
+          question.querySelectorAll(".option").forEach((opt) => {
+            opt.classList.remove("correct", "incorrect");
+          });
+
+          if (selectedAnswer) {
+            if (selectedAnswer.dataset.correct) {
+              // Câu trả lời đúng
+              selectedAnswer.closest(".option").classList.add("correct");
+              resultDiv.innerHTML = `
+                    <div class="explanation correct">
+                        <strong>✓ Đúng!</strong><br>
+                        Bạn đã chọn đáp án chính xác.
+                    </div>`;
+            } else {
+              // Câu trả lời sai
+              selectedAnswer.closest(".option").classList.add("incorrect");
+              correctAnswer.closest(".option").classList.add("correct");
+              resultDiv.innerHTML = `
+                    <div class="explanation incorrect">
+                        <strong>✗ Sai!</strong><br>
+                        Đáp án đúng là: ${correctAnswer
+                          .closest(".option")
+                          .textContent.trim()}
+                    </div>`;
+            }
+          } else {
+            // Chưa chọn đáp án
+            correctAnswer.closest(".option").classList.add("correct");
+            resultDiv.innerHTML = `
+                <div class="explanation incorrect">
+                    <strong>✗ Chưa trả lời!</strong><br>
+                    Đáp án đúng là: ${correctAnswer
+                      .closest(".option")
+                      .textContent.trim()}
+                </div>`;
+          }
+        });
+
+        // Disable tất cả các input sau khi xem đáp án
+        document.querySelectorAll('input[type="radio"]').forEach((input) => {
+          input.disabled = true;
+        });
+
+        // Ẩn nút nộp bài nếu còn hiển thị
+        document.getElementById("submitBtn").style.display = "none";
+      }
+
+      // Về trang chủ
+      function goHome() {
+        window.location.href = "index.html";
+      }
+
+      // Event Listeners
+      document
+        .getElementById("submitBtn")
+        .addEventListener("click", showConfirmModal);
+
+      // Prevent accidental leaves
+      window.addEventListener("beforeunload", function (e) {
+        if (!isSubmitted) {
+          e.preventDefault();
+          e.returnValue = "";
+        }
+      });
+
+      // Initialize
+      initializeExercise();
+    </script>
+
+    <div id="highlight-toolbar" class="highlight-toolbar">
+      <button class="toolbar-btn highlight-btn" title="Highlight">
+        <i class="material-icons">brush</i>
+      </button>
+      <button class="toolbar-btn clear-btn" title="Clear">
+        <i class="material-icons">format_clear</i>
+      </button>
+    </div>
+  </body>
+</html>
